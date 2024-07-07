@@ -14,6 +14,9 @@ var LoginSchema = new Schema({
     username: {
         type: String,
         Required: 'Please enter'
+    },
+    character_list: {
+        type: [String]
     }
 
 },

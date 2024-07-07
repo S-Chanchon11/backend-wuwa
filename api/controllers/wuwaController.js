@@ -6,9 +6,10 @@ const jwt = require('jsonwebtoken')
 
 exports.createAUser = function(req, res){
     var newUser = new Login(req.body)
+    newUser.character_list = ["Rover (Male)", "Rover (Female)", "Chixia", "Yangyang", "Baizhi"]
     newUser.save(function(err, user){
         if(err) throw err
-        else res.json(user)
+        else console.log(user)
     })
     jwt.sign({newUser}, 'privatekey', { expiresIn: '1h' },(err, token) => {
       if(err) { console.log(err) }    
