@@ -2,7 +2,7 @@
 var mongoose = require('mongoose')
 var { Login, Character } = require("../models/wuwaModel");
 const jwt = require('jsonwebtoken')
-const cookieParser = require("cookie-parser")
+
 
 exports.createAUser = function(req, res){
     var newUser = new Login(req.body)
@@ -12,10 +12,7 @@ exports.createAUser = function(req, res){
     })
     jwt.sign({newUser}, 'privatekey', { expiresIn: '1h' },(err, token) => {
       if(err) { console.log(err) }    
-      res.cookie("access-token", token, {
-        maxAge: 60*60,
-        httpOnly: true
-      })
+      res.status(200).json({ token })
       //res.status(200).send("Signup successful")
     })
 }
@@ -31,71 +28,33 @@ exports.verifyAUser = function(req, res) {
         return;
       }
       if (err) {
-        console.error(err);
+        console.error(err)
         res.status(500).send('Server error');
         return;
       }
 
       jwt.sign({user}, 'privatekey', { expiresIn: '1h' },(err, token) => {
         if(err) { console.log(err) }    
-        res.cookie("access-token", token, {
-          maxAge: 60*60,
-          httpOnly: true
-        })
-        res.status(200).send("Signin successful")
+        res.status(200).json({token})
       })
 
     })
   }
 
-exports.getAUser = function(req, res, next){
-  const accessToken = req.cookies["access-token"]
-
-  if (!accessToken)
-  return res.status(400).json({ error: "User not Authenticated"})
-
-  try{
-    jwt.verify(accessToken, "privatekey", function (err, data) {
-      if (err) {
-        res.sendStatus(403);
-      } else {
-          req.authenticated = true
-          User.findById(req.params.userId, function(err, user){
+exports.getAUser = function(req, res){
+  Login.findById(req.params.id, function(err, user){
             if(err) throw err
-            res.json(user)
+            res.json({user, message: 'Successfully get user'})
           })
-        }
-      })
-    }
-  catch(err){
-    return res.status(400).json({ error: err})
-  }
 }
 
 exports.updateAUser = function(req, res){
     var newUser = {}
     newUser = req.body
     console.log(newUser)
-    const accessToken = req.cookies["access-token"]
-
-  if (!accessToken)
-  return res.status(400).json({ error: "User not Authenticated"})
-
-  try{
-    jwt.verify(accessToken, "privatekey", function (err, data) {
-      if (err) {
-        res.sendStatus(403);
-      } else {
-          req.authenticated = true   
-          User.findByIdAndUpdate(req.params.id, newUser, {new: true}, function(err, user){
-            if(err) throw err
-            console.log(user)
-            res.json(user)
-          })
-        }
-      })
-    }
-  catch(err){
-    return res.status(400).json({ error: err})
-  }
+    Login.findByIdAndUpdate(req.params.id, newUser, {new: true}, function(err, user){
+      if(err) throw err
+      console.log(user)
+      res.json(user)
+    })
 }

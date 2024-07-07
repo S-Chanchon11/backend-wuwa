@@ -1,16 +1,15 @@
 'use strict'
+
+const { verifyToken } = require('../controllers/verifyToken')
+
 module.exports = function(app){
     var wuwa = require('../controllers/wuwaController')
 
-    app.route('/auth/register')
-        .post(wuwa.createAUser)
+    app.post('/auth/register', wuwa.createAUser)
 
-    app.route('/auth/login')
-        .post(wuwa.verifyAUser)
+    app.post('/auth/login', wuwa.verifyAUser)
 
-    app.route('/users/:id')
-        .get(wuwa.getAUser)
+    app.get('/users/:id', verifyToken, wuwa.getAUser)
 
-    app.route('/users/:id')
-        .put(wuwa.updateAUser)
+    app.put('/users/:id', verifyToken, wuwa.updateAUser)
 }

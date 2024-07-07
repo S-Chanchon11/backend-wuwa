@@ -2,9 +2,11 @@ var express = require('express')
 var cors = require('cors')
 mongoose = require('mongoose')
 bodyParser = require('body-parser')
+const cookieParser = require("cookie-parser")
 
 app = express()
 app.use(cors())
+app.use(cookieParser())
 
 port = process.env.PORT || 3427
 
