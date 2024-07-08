@@ -12,4 +12,8 @@ module.exports = function(app){
     app.get('/users/:id', verifyToken, wuwa.getAUser)
 
     app.put('/users/:id', verifyToken, wuwa.updateAUser)
+
+    app.get('/events', verifyToken, wuwa.getAllEvents)
+
+    app.get('/events/:id', verifyToken, wuwa.getAEvent)
 }

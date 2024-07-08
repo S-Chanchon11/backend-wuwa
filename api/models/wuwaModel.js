@@ -57,7 +57,31 @@ var CharacterSchema = new Schema({
 { collection: 'Characters' }
 )
 
+var EventSchema = new Schema({
+    events_name: {
+        type: String,
+        Required: 'Please enter'
+    },
+    events_desc: {
+        type: String,
+        Required: 'Please enter'
+    },
+    date: {
+        type: String,
+        Required: 'Please enter'
+    },
+    events_type: {
+        type: String,
+        Required: 'Please enter'
+    }
+
+},
+{ collection: 'Events' }
+)
+
+
 module.exports = {
     Login: mongoose.model('Login', LoginSchema),
-    Character: mongoose.model('Character', CharacterSchema)
+    Character: mongoose.model('Character', CharacterSchema),
+    Event: mongoose.model('Event', EventSchema)
 }

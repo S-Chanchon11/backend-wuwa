@@ -1,6 +1,6 @@
 'use strict'
 var mongoose = require('mongoose')
-var { Login, Character } = require("../models/wuwaModel");
+var { Login, Character, Event } = require("../models/wuwaModel");
 const jwt = require('jsonwebtoken')
 
 
@@ -58,4 +58,20 @@ exports.updateAUser = function(req, res){
       console.log(user)
       res.json(user)
     })
+}
+
+exports.getAllEvents = function(req, res){
+  var query = { sort: { events_name: 1 } }
+  Event.find({}, null, query, function(err, event){
+      if(err) throw err
+      //console.log(event)
+      res.json(event)
+  })
+}
+
+exports.getAEvent = function(req, res){
+  Event.findById(req.params.id, function(err, event){
+            if(err) throw err
+            res.json({event, message: 'Successfully get event'})
+          })
 }
