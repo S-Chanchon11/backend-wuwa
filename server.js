@@ -28,7 +28,9 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
 
 var routes = require('./api/routes/wuwaRoutes.js')
+var character_routes = require('./api/routes/characterRoutes.js')
 routes(app)
+character_routes(app)
 
 app.listen(port)
 

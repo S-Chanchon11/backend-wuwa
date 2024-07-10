@@ -11,9 +11,13 @@ module.exports = function(app){
 
     app.get('/users/:id', verifyToken, wuwa.getAUser)
 
+    app.get('/users',wuwa.getAllUser)
+
+    app.get('/home',wuwa.getUserCharacter)
+
     app.put('/users/:id', verifyToken, wuwa.updateAUser)
 
-    app.get('/events', verifyToken, wuwa.getAllEvents)
+    app.get('/events', wuwa.getAllEvents)
 
-    app.get('/events/:id', verifyToken, wuwa.getAEvent)
+    app.get('/events/:id',  wuwa.getAEvent)
 }
