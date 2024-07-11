@@ -2,6 +2,7 @@
 var mongoose = require('mongoose')
 var Schema = mongoose.Schema
 
+//schema of user including email, password, username and the array of character names which user owned
 var LoginSchema = new Schema({
     email: {
         type: String,
@@ -23,6 +24,7 @@ var LoginSchema = new Schema({
 { collection: 'Users' }
 )
 
+//schema of character in the game including the detail of the character
 var CharacterSchema = new Schema({
     character_name: {
         type: String,
@@ -57,6 +59,7 @@ var CharacterSchema = new Schema({
 { collection: 'Characters' }
 )
 
+//schema of news in the game including the detail of the news
 var EventSchema = new Schema({
     events_name: {
         type: String,

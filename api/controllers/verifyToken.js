@@ -1,5 +1,7 @@
 const jwt = require("jsonwebtoken")
 
+
+//verify the jwt token from request header
 exports.verifyToken = (req, res, next) => {
     const bearerHeader = req.headers["authorization"];
   if (typeof bearerHeader !== "undefined") {
